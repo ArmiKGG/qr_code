@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, jsonify, make_response, render_template, request, flash, redirect, url_for
 from flask_restful import reqparse, Api, Resource
 from werkzeug.datastructures import FileStorage
