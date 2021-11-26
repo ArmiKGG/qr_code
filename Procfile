@@ -1,1 +1,1 @@
-web: gunicorn  patched:app
+web: gunicorn --preload patched:app
