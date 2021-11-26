@@ -1,1 +1,1 @@
-web: gunicorn --preload patched:app
+web: gunicorn --preload wsgi:app
