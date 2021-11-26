@@ -22,6 +22,10 @@ load_dotenv()
 extensons_img = ['.jpg', '.png']
 
 
+import os
+if not os.path.exists('./tmp'):
+    os.makedirs('./tmp')
+
 def proces_path(path):
     try:
         img = cv2.imread(path)
