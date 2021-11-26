@@ -1,11 +1,7 @@
 import os
 from flask import Flask, jsonify, make_response, render_template, request, flash, redirect, url_for
-from flask_restful import reqparse, Api, Resource
-from werkzeug.datastructures import FileStorage
-from dotenv import load_dotenv
 import cv2
 import fitz
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -16,12 +12,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'super secret key'
 
 
-load_dotenv()
-
 extensons_img = ['.jpg', '.png']
 
 
-import os
 if not os.path.exists('./tmp'):
     os.makedirs('./tmp')
 
@@ -94,10 +87,6 @@ def upload_file():
             if f.filename in filename:
                 os.remove(f"./tmp/{filename}")
         return jsonify(data)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 if __name__ == '__main__':
