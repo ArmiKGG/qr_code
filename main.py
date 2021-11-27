@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, make_response, render_template, request, flash, redirect, url_for
 import cv2
 import fitz
-from PIL import Image
+import Image
 from pyzbar.pyzbar import decode
 
 app = Flask(__name__)
