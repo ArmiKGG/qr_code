@@ -2,7 +2,6 @@ import os
 from flask import Flask, jsonify, make_response, render_template, request, flash, redirect, url_for
 import cv2
 import fitz
-import Image
 from pyzbar.pyzbar import decode
 
 app = Flask(__name__)
@@ -20,7 +19,7 @@ if not os.path.exists('./tmp'):
     os.makedirs('./tmp')
     
 def second_method(img_path):
-    data_src = decode(Image.open(img_path))
+    data_src = decode(cv2.imread(img_path))
     link = str(data_src[0][0]).replace("b'", '').replace("'", '')
     return {'decoded_url': link}
 
