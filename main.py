@@ -49,10 +49,10 @@ def convert_pdf_to_images(pdf_path):
         if data:
             return data
         else:
-            data = second_method(path_to_file)
+            data = second_method(output)
             if data:
                 return data
-        return return {'error': 'unreadable pdf'}
+        return {'error': 'unreadable pdf'}
 
 
 def get_qr(path_to_file):
