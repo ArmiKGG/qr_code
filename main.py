@@ -2,11 +2,12 @@ import os
 from flask import Flask, jsonify, make_response, render_template, request, flash, redirect, url_for
 import cv2
 import fitz
+from PIL import Image
+from pyzbar.pyzbar import decode
 
 app = Flask(__name__)
 
 UPLOAD_FOLDER = './tmp'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'super secret key'
@@ -17,6 +18,12 @@ extensons_img = ['.jpg', '.png']
 
 if not os.path.exists('./tmp'):
     os.makedirs('./tmp')
+    
+def second_method(img_path):
+    data_src = decode(Image.open(img_path))
+    link = str(data_src[0][0]).replace("b'", '').replace("'", '')
+    return {'decoded_url': link}
+
 
 def proces_path(path):
     try:
@@ -39,7 +46,13 @@ def convert_pdf_to_images(pdf_path):
         output = fr"./tmp/{file_name} - {i}.png"
         pix.save(output)
         data = proces_path(output)
-        return data
+        if data:
+            return data
+        else:
+            data = second_method(path_to_file)
+            if data:
+                return data
+        return return {'error': 'unreadable pdf'}
 
 
 def get_qr(path_to_file):
@@ -54,7 +67,10 @@ def get_qr(path_to_file):
         if data:
             return data
         else:
-            return {'error': 'unreadable img'}
+            data = second_method(path_to_file)
+            if data:
+                return data
+        return {'error': 'unreadable img'}
     elif if_pdf:
         return convert_pdf_to_images(path_to_file)
 
